@@ -20,6 +20,16 @@ class Personagem:
   
   def exibir_detalhes(self):
     return f"Nome: {self.get_nome()}\nVida: {self.get_vida()}\nNível: {self.get_nivel()}"
+
+  def receber_ataque(self, dano):
+    self.__vida -= dano
+    if self.__vida < 0:
+      self.__vida = 0 
+  
+  def ataque(self, alvo):
+    dano = self.__nivel * 2
+    alvo.receber_ataque(dano)
+    print(f"\n{self.get_nome()} atacou {alvo.get_nome()} e causou {dano} de dano!")
   
 class Heroi(Personagem):
   def __init__(self, nome, vida, nivel, habilidade):
@@ -47,8 +57,8 @@ class Jogo:
   """Classe para a orquestração."""
 
   def __init__(self) -> None:
-    self.heroi = Heroi(nome = "Ichigo Kurosaki", vida = 1200, nivel = 12, habilidade = "Ataque Vasto Lorde")
-    self.inimigo = Inimigo(nome = "Grimmjow", vida = 1100, nivel = 10, tipo = "Hollow - Espada")
+    self.heroi = Heroi(nome = "Ichigo Kurosaki", vida = 120, nivel = 12, habilidade = "Ataque Vasto Lorde")
+    self.inimigo = Inimigo(nome = "Grimmjow", vida = 110, nivel = 8, tipo = "Hollow - Espada")
 
   def iniciar_batalha(self):
     """ Gerenciador de turnos. """
@@ -61,6 +71,17 @@ class Jogo:
   
       input("Pressione Enter para iniciar...")
       escolha = input("Escolha o tipo de ataque: (1 - Ataque Normal, 2 - Ataque Especial): ")
+
+      if escolha == '1':
+         self.heroi.ataque(self.inimigo)
+      else:
+        print("Escolha inválida! Selecione a correta!")
+
+    if self.heroi.get_vida() > 0:
+      print(f"\nParabéns o {self.heroi.get_nome()} ganhou a batalha!")
+    else:
+      print("\nO seu herói foi derrotado!")
+
 
 # Criação da instância e execução do método início de batalha.
 jogo = Jogo()
