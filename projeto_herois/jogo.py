@@ -42,8 +42,26 @@ class Inimigo(Personagem):
   
   def exibir_detalhes(self):
     return f"{super().exibir_detalhes()}\nTipo: {self.get_tipo()}\n"
+
+class Jogo:
+  """Classe para a orquestração."""
+
+  def __init__(self) -> None:
+    self.heroi = Heroi(nome = "Ichigo Kurosaki", vida = 1200, nivel = 12, habilidade = "Ataque Vasto Lorde")
+    self.inimigo = Inimigo(nome = "Grimmjow", vida = 1100, nivel = 10, tipo = "Hollow - Espada")
+
+  def iniciar_batalha(self):
+    """ Gerenciador de turnos. """
+    print("\nInicio de batalha!")
+    while self.heroi.get_vida() > 0 and self.inimigo.get_vida() > 0:
+      print("\nDetalhes do Herói:")
+      print(self.heroi.exibir_detalhes())
+      print("\nDetalhes do Inimigo:")
+      print(self.inimigo.exibir_detalhes())
   
-heroi = Heroi(nome = "Naruto", vida = 110, nivel = 15, habilidade = "Rasengan")
-print(heroi.exibir_detalhes())
-inimigo = Inimigo(nome = "Sasuke", vida = 100, nivel = 12, tipo = "Uchiha")
-print(inimigo.exibir_detalhes())
+      input("Pressione Enter para iniciar...")
+      escolha = input("Escolha o tipo de ataque: (1 - Ataque Normal, 2 - Ataque Especial): ")
+
+# Criação da instância e execução do método início de batalha.
+jogo = Jogo()
+jogo.iniciar_batalha()
